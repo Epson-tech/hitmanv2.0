@@ -1,0 +1,97 @@
+PROJECT: BLACKOUT – Technical Documentation
+1. Overview: What Does This Script Do?
+
+improved_activity_logger.py is a Window Activity Logger. Unlike a standard keylogger (which records every keystroke), this tool is designed to monitor focus and attention.
+
+When you run the script, it sits silently in the background and observes which application window you are currently using. Every time you switch tasks (e.g., from checking email to coding in Python), the script detects that change, records the name of the new window, and saves the exact time it happened.
+
+Key Features:
+
+     Passive Monitoring: It runs quietly without interfering with your work.
+     Change Detection: It only logs when you switch windows, saving space and keeping the log clean.
+     Timestamping: Every action is tagged with the precise date and time.
+     Data Persistence: It saves all data to a local file named history_log.txt.
+
+2. Technical Breakdown: How It Works
+
+The script operates on a simple infinite loop, checking your system state at regular intervals.
+A. Dependencies
+
+The script relies on pygetwindow, a Python library that allows the program to interact with your operating system's window manager. It asks the OS: "Which window is currently on top?"
+B. The Logic Flow
+
+    Initialization:
+         The script sets up a log file path (history_log.txt).
+         It defines a CHECK_INTERVAL (3 seconds), meaning it wakes up every 3 seconds to look around.
+    The Loop (while True):
+         It asks get_active_window_title() for the name of the currently active program.
+    Comparison:
+         It compares the Current Window with the Last Window it recorded.
+         if current_window != last_window: This logic ensures it only writes to the file when a change occurs. If you leave "Chrome" open for an hour, it only logs it once when you first opened it.
+    Logging:
+         If a change is detected, it generates a timestamp using datetime.
+         It formats the entry (e.g., [2023-10-27 10:00:01] Visual Studio Code).
+         It appends this line to history_log.txt.
+    Resting:
+         The script pauses (time.sleep) for 3 seconds to avoid using up too much CPU power.
+
+3. Why Should We Have It? (The Utility)
+
+In an age of digital distraction, knowing how we spend our time is just as important as what we are doing. Here is why this tool is valuable:
+
+     Personal Productivity Audit: It provides concrete data on your work habits. You can see exactly how much time you spend on YouTube versus Excel or VS Code.
+     Project Tracking: For freelancers or developers, it serves as a timesheet. You can look back at the log to see when you were working on a specific project.
+     Digital Wellness: It highlights "context switching." Frequent switching between windows is known to lower IQ and reduce focus. This tool helps you visualize how distracted you are.
+     Lightweight Forensics: In a professional IT environment, it helps audit which applications are being used and when, without the heavy privacy intrusion of capturing keystrokes or screenshots.
+
+4. How Will It Help the World? (The Vision)
+
+While this is a small script, the principles behind Project BLACKOUT contribute to a more efficient and mindful society:
+
+    Combating the Attention Economy:
+    Social media apps are designed to steal our attention. By making people aware of their window-switching habits, this tool encourages "Deep Work." When people focus better, they produce higher quality work, leading to faster scientific, technological, and artistic advancements.
+
+    Optimizing Education:
+    If used by students (with consent), it can help identify study patterns. A student might realize they switch to a game window every 10 minutes. Recognizing the problem is the first step to fixing it, leading to better education outcomes.
+
+    Efficient Resource Management:
+    For companies, understanding application usage helps in licensing. If a log shows that an expensive piece of software is never used, money can be saved and redirected to other areas like charity or research.
+
+    Promoting Ethical Monitoring:
+    Unlike invasive spyware, this tool respects content privacy. It only looks at the container (the app title), not the content (what you are typing). It sets a standard for accountability that is balanced with privacy.
+
+5. Developer Credits
+
+This project was developed by the following team based in Lusaka, Zambia:
+
+     Core Developers:
+         Epson Chimukwaya
+         Shaun .D. Kaluba
+         David Mwale
+         Misheck Sg Ng'ambi
+     Special Assistant:
+         Emmanuel Mwamba Thee Great
+     Location: Lusaka, Zambia
+
+How to Run
+
+    Install Python.
+    Install the required library:
+    bash
+     
+      
+     
+     
+    pip install pygetwindow
+     
+     
+    Run the script:
+    bash
+     
+      
+     
+     
+    python improved_activity_logger.py
+     
+     
+    Check the history_log.txt file to see your activity history.
